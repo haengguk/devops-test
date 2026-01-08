@@ -44,8 +44,11 @@ pipeline {
                     // 아까 만든 GitHub 토큰 ID (cicd-token) 사용
                     withCredentials([usernamePassword(credentialsId: 'cicd-token', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_TOKEN')]) {
 
-                        // 1. Config 레포지토리 클론 (임시 폴더 'config-repo'에 다운로드), 인증 정보를 URL에 포함시켜서 클론
-                        sh "git clone https://${GIT_USER}:${GIT_TOKEN}@${CONFIG_REPO_URL} config-repo"
+                        sh 'rm -rf config-repo'
+
+                        sh 'git clone https://haengguk:$GIT_TOKEN@github.com/haengguk/devops-test-config.git config-repo'
+//                         // 1. Config 레포지토리 클론 (임시 폴더 'config-repo'에 다운로드), 인증 정보를 URL에 포함시켜서 클론
+//                         sh "git clone https://${GIT_USER}:${GIT_TOKEN}@${CONFIG_REPO_URL} config-repo"
 
                         // 2. 폴더 안으로 이동해서 내용 수정
                         dir('config-repo') {
